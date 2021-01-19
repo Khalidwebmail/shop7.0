@@ -10,6 +10,9 @@ try {
     window.Popper = require('popper.js').default;
     window.$ = window.jQuery = require('jquery');
 
+    // var jQuery = require('jquery');
+    // require('jquery.easing')(jQuery);
+
     require('bootstrap');
 } catch (e) {}
 
