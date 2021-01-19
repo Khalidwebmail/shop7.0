@@ -12,21 +12,20 @@
                                 <form>
                                     <div class="form-group">
                                         <label>First Name</label>
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Customer Name">
+                                        <input type="text" class="form-control" id="exampleInputName" placeholder="Customer Name" v-model="form.name">
                                     </div>
                                     <div class="form-group">
                                         <label>Email</label>
-                                        <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp"
-                                        placeholder="Enter Email Address">
+                                        <input type="email" class="form-control" id="exampleInputEmail" aria-describedby="emailHelp" placeholder="Enter Email Address" v-model="form.email">
                                     </div>
                                     <div class="form-group">
                                         <label>Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password">
+                                        <input type="password" class="form-control" id="exampleInputPassword" placeholder="Password" v-model="form.password">
                                     </div>
                                     <div class="form-group">
                                         <label>Repeat Password</label>
-                                        <input type="password" class="form-control" id="exampleInputPasswordRepeat"
-                                        placeholder="Repeat Password">
+                                        <input type="confirm_password" class="form-control" id="exampleInputPasswordRepeat"
+                                        placeholder="Repeat Password" v-model="form.confirm_password">
                                     </div>
                                     <div class="form-group">
                                         <button type="submit" class="btn btn-primary btn-block">Register</button>
@@ -49,8 +48,15 @@
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted.')
+        data(){
+            return{
+                form:{
+                    name: null,
+                    email: null,
+                    password: null,
+                    confirm_password: null
+                }
+            }
         }
     }
 </script>
