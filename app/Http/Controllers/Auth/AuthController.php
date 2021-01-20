@@ -20,7 +20,13 @@ class AuthController extends Controller
     {
         $this->middleware('jwt')->except('login', 'signup');
     }
-
+    
+    /**
+     * signup
+     *
+     * @param  mixed $request
+     * @return void
+     */
     public function signup(SignupRequest $request)
     {
         $data = $request->all();
