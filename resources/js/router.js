@@ -8,7 +8,7 @@ import ForgetPasswordComponent from "./components/pages/auth/ForgetPasswordCompo
 Vue.use(VueRouter)
 
 const routes = [
-    { path: '/home', component: HomeComponent, name: "/home" },
+    { path: '/home', component: HomeComponent, name: "home" },
     { path: '/', component: LoginComponent, name: '/' },
     { path: '/register', component: RegisterComponent, name: 'register' },
     { path: '/forget-password', component: ForgetPasswordComponent, name: 'forget' },

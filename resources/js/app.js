@@ -8,6 +8,10 @@ require('./bootstrap');
 
 window.Vue = require('vue');
 import router from "./router";
+
+// Import User Class
+import User from './helper/User';
+window.User = User;
 // var Chart = require('chart.js');
 /**
  * The following block of code may be used to automatically register your
