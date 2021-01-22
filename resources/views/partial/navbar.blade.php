@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top">
+<nav class="navbar navbar-expand navbar-light bg-navbar topbar mb-4 static-top" id="topbar" v-show="$route.path === '/' || $route.path === '/register' || $route.path === '/forget' ? false : true " style="display:  none;">
     <button id="sidebarToggleTop" class="btn btn-link rounded-circle mr-3">
       <i class="fa fa-bars"></i>
     </button>

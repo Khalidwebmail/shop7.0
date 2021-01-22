@@ -13,6 +13,10 @@ import router from "./router";
 import User from './helper/User';
 window.User = User;
 
+// Import Notification Class
+import Notification from './helper/Notification';
+window.Notification = Notification
+
  // Sweet Alert start 
 import Swal from 'sweetalert2'
 window.Swal = Swal;
@@ -30,6 +34,9 @@ const Toast = Swal.mixin({
 });
 
 window.Toast = Toast;
+
+// Noty
+import Noty from 'noty';
 
 // var Chart = require('chart.js');
 /**
