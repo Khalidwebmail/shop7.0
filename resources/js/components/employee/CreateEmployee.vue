@@ -1,5 +1,4 @@
 <template>
-
     <div class="row justify-content-center">
         <div class="col-xl-12 col-lg-12 col-md-12">
             <div class="card shadow-sm my-5">
@@ -37,8 +36,8 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Sallery" v-model="form.sallery">
-                                        <small class="text-danger" v-if="errors.sallery"> {{ errors.sallery[0] }} </small>
+                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Salary" v-model="form.salary">
+                                        <small class="text-danger" v-if="errors.salary"> {{ errors.salary[0] }} </small>
                                     </div>
                                 </div>
                             </div>
@@ -59,11 +58,9 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your phone Number" v-model="form.phone">
+                                        <input type="text" class="form-control" id="exampleInputPhone" placeholder="Enter Your phone Number" v-model="form.phone">
                                         <small class="text-danger" v-if="errors.phone"> {{ errors.phone[0] }} </small>
                                     </div>
-
-
                                     <div class="col-md-6">
                                         
                                     </div>
@@ -75,7 +72,7 @@
 
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input type="file" class="custom-file-input" id="customFile">
+                                        <input type="file" class="custom-file-input" id="customFile" v-on:change="onFileSelected">
                                         <small class="text-danger" v-if="errors.photo"> {{ errors.photo[0] }} </small>
                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
@@ -105,11 +102,11 @@
 
 <script>
     export default {
-        // created(){
-        //     if (User.loggedIn()) {
-        //         this.$router.push({name: 'home'})
-        //     }
-        // },
+        created(){
+            if (!User.loggedIn()) {
+                this.$router.push({name: '/'})
+            }
+        },
         data(){
             return{
                 form:{
@@ -125,24 +122,32 @@
                 errors:{}
             }
         },
-        // methods:{
-        //     register: function(){
-        //         axios.post("/api/auth/signup", this.form)
-        //             .then((response)=>{
-        //                 Toast.fire({
-        //                     icon: 'success',
-        //                     title: 'Signup Complete'
-        //                 })
-        //                 this.$router.push({ name: 'register' })
-        //                 this.form.name = ''
-        //                 this.form.email = ''
-        //                 this.form.password = ''
-        //                 this.form.password_confirmation = ''
-        //             })
-        //             .catch((error)=>{
-        //                 this.errors = error.response.data
-        //             })
-        //     }
-        // }
+        methods:{
+            onFileSelected: function(event){
+                let file = event.target.files[0]
+                if(file.size > 8000)
+                {
+                    Notification.image_validation()
+                }
+                else{
+                    let reader = new FileReader();
+                    reader.onload = event => {
+                        this.form.photo = event.target.result;
+                        console.log(this.form.photo)
+                    };
+                    reader.readAsDataURL(file);
+                }
+            },
+            create: function(){
+                axios.post("/api/employee", this.form)
+                    .then(()=>{
+                        this.$router.push({ name: 'employees' })
+                        Notification.success()
+                    })
+                    .catch((error)=>{
+                        this.errors = error.response.data
+                    })
+            }
+        }
     }
 </script>

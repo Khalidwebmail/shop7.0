@@ -2031,15 +2031,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  // created(){
-  //     if (User.loggedIn()) {
-  //         this.$router.push({name: 'home'})
-  //     }
-  // },
+  created: function created() {
+    if (!User.loggedIn()) {
+      this.$router.push({
+        name: '/'
+      });
+    }
+  },
   data: function data() {
     return {
       form: {
@@ -2054,26 +2053,40 @@ __webpack_require__.r(__webpack_exports__);
       },
       errors: {}
     };
-  } // methods:{
-  //     register: function(){
-  //         axios.post("/api/auth/signup", this.form)
-  //             .then((response)=>{
-  //                 Toast.fire({
-  //                     icon: 'success',
-  //                     title: 'Signup Complete'
-  //                 })
-  //                 this.$router.push({ name: 'register' })
-  //                 this.form.name = ''
-  //                 this.form.email = ''
-  //                 this.form.password = ''
-  //                 this.form.password_confirmation = ''
-  //             })
-  //             .catch((error)=>{
-  //                 this.errors = error.response.data
-  //             })
-  //     }
-  // }
+  },
+  methods: {
+    onFileSelected: function onFileSelected(event) {
+      var _this = this;
 
+      var file = event.target.files[0];
+
+      if (file.size > 8000) {
+        Notification.image_validation();
+      } else {
+        var reader = new FileReader();
+
+        reader.onload = function (event) {
+          _this.form.photo = event.target.result;
+          console.log(_this.form.photo);
+        };
+
+        reader.readAsDataURL(file);
+      }
+    },
+    create: function create() {
+      var _this2 = this;
+
+      axios.post("/api/employee", this.form).then(function () {
+        _this2.$router.push({
+          name: 'employees'
+        });
+
+        Notification.success();
+      })["catch"](function (error) {
+        _this2.errors = error.response.data;
+      });
+    }
+  }
 });
 
 /***/ }),
@@ -45236,17 +45249,17 @@ var render = function() {
                               {
                                 name: "model",
                                 rawName: "v-model",
-                                value: _vm.form.sallery,
-                                expression: "form.sallery"
+                                value: _vm.form.salary,
+                                expression: "form.salary"
                               }
                             ],
                             staticClass: "form-control",
                             attrs: {
                               type: "text",
                               id: "exampleInputFirstName",
-                              placeholder: "Enter Your Sallery"
+                              placeholder: "Enter Your Salary"
                             },
-                            domProps: { value: _vm.form.sallery },
+                            domProps: { value: _vm.form.salary },
                             on: {
                               input: function($event) {
                                 if ($event.target.composing) {
@@ -45254,18 +45267,16 @@ var render = function() {
                                 }
                                 _vm.$set(
                                   _vm.form,
-                                  "sallery",
+                                  "salary",
                                   $event.target.value
                                 )
                               }
                             }
                           }),
                           _vm._v(" "),
-                          _vm.errors.sallery
+                          _vm.errors.salary
                             ? _c("small", { staticClass: "text-danger" }, [
-                                _vm._v(
-                                  " " + _vm._s(_vm.errors.sallery[0]) + " "
-                                )
+                                _vm._v(" " + _vm._s(_vm.errors.salary[0]) + " ")
                               ])
                             : _vm._e()
                         ])
@@ -45365,7 +45376,7 @@ var render = function() {
                             staticClass: "form-control",
                             attrs: {
                               type: "text",
-                              id: "exampleInputFirstName",
+                              id: "exampleInputPhone",
                               placeholder: "Enter Your phone Number"
                             },
                             domProps: { value: _vm.form.phone },
@@ -45395,7 +45406,8 @@ var render = function() {
                         _c("div", { staticClass: "col-md-6" }, [
                           _c("input", {
                             staticClass: "custom-file-input",
-                            attrs: { type: "file", id: "customFile" }
+                            attrs: { type: "file", id: "customFile" },
+                            on: { change: _vm.onFileSelected }
                           }),
                           _vm._v(" "),
                           _vm.errors.photo
@@ -63472,8 +63484,8 @@ var routes = [{
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\shop7.0\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\shop7.0\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /var/www/shop7.0/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /var/www/shop7.0/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
