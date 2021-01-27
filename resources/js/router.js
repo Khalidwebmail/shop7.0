@@ -8,7 +8,9 @@ import LogoutComponent from "./components/pages/auth/LogoutComponent.vue"
 /**
  * Employee modules
  */
+import IndexEmployee from "./components/employee/IndexEmployee.vue"
 import CreateEmployee from "./components/employee/CreateEmployee.vue"
+import EditEmployee from "./components/employee/EditEmployee.vue"
 
 Vue.use(VueRouter)
 
@@ -18,9 +20,9 @@ const routes = [
     { path: '/register', component: RegisterComponent, name: 'register' },
     { path: '/forget-password', component: ForgetPasswordComponent, name: 'forget' },
     { path: '/logout', component: LogoutComponent, name: 'logout' },
-    { path: '/employees', component: CreateEmployee, name: 'employee' },
+    { path: '/employees', component: IndexEmployee, name: 'employees' },
     { path: '/store-employees', component: CreateEmployee, name: 'store-employees' },
-    { path: '/edit-employees', component: CreateEmployee, name: 'edit-employees' },
+    { path: '/edit-employees', component: EditEmployee, name: 'edit-employees' },
 ]
 
 export default new VueRouter({

@@ -1,0 +1,83 @@
+<template>
+    <div class="row">
+        <div class="col-lg-12 mb-4">
+            <!-- Simple Tables -->
+            <div class="card">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Employee List</h6>
+            </div>
+            <div class="table-responsive">
+                <table class="table align-items-center table-flush table-hover">
+                    <thead class="thead-light">
+                        <tr>
+                            <th>Photo</th>
+                            <th>Emp Name</th>
+                            <th>NID Num</th>
+                            <th>Email</th>
+                            <th>Cell Num</th>
+                            <th>Salary</th>
+                            <th>Joining Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody v-if="employees.length > 0">
+                        <tr v-for="employee in employees" :key="employee.id">
+                            <td>
+                                <img :src="employee.photo" alt="No image uploaded" id="em_photo">
+                            </td>
+                            <td>{{ employee.name }}</td>
+                            <td>{{ employee.nid }}</td>
+                            <td>{{ employee.email }}</td>
+                            <td>{{ employee.phone }}</td>
+                            <td>{{ employee.salary }}</td>
+                            <td>{{ employee.joining_date | myDate }}</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="card-footer"></div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+export default {
+    created(){
+        if (!User.loggedIn()) {
+            this.$router.push({name: '/'})
+        }
+        this.index()
+    },
+
+    data(){
+        return{
+            employees: []
+        }
+    },
+
+    methods:{
+        index: function(){
+            axios.get("/api/employee/")
+                .then((response)=>{
+                    this.employees = response.data
+                    // console.log(this.employees)
+                })
+                .catch(()=>{
+
+                })
+        }
+    }
+}
+</script>
+
+<style type="text/css">
+  #em_photo{
+    height: 40px;
+    width: 40px;
+  }
+</style>

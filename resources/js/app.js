@@ -17,7 +17,7 @@ window.User = User;
 import Notification from './helper/Notification';
 window.Notification = Notification
 
- // Sweet Alert start 
+// Sweet Alert start 
 import Swal from 'sweetalert2'
 window.Swal = Swal;
 
@@ -38,6 +38,11 @@ window.Toast = Toast;
 // Noty
 import Noty from 'noty';
 
+// Moment js
+import moment from 'moment';
+Vue.filter('myDate', function(created) {
+    return moment(created).format('MMMM Do YYYY');
+});
 // var Chart = require('chart.js');
 /**
  * The following block of code may be used to automatically register your
