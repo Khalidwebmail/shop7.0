@@ -15,13 +15,13 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Full Name" v-model="form.name">
+                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Full Name" v-model="form.name" autocomplete="off">>
                                         <small class="text-danger" v-if="errors.name"> {{ errors.name[0] }} </small>
                                     </div>
 
 
                                     <div class="col-md-6">
-                                        <input type="email" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Email" v-model="form.email">
+                                        <input type="email" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Email" v-model="form.email" autocomplete="off">>
                                         <small class="text-danger" v-if="errors.email"> {{ errors.email[0] }} </small>
                                     </div>     
                                 </div>
@@ -31,12 +31,12 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Address" v-model="form.address">
+                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Address" v-model="form.address" autocomplete="off">>
                                         <small class="text-danger" v-if="errors.address"> {{ errors.address[0] }} </small>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Salary" v-model="form.salary">
+                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Salary" v-model="form.salary" autocomplete="off">>
                                         <small class="text-danger" v-if="errors.salary"> {{ errors.salary[0] }} </small>
                                     </div>
                                 </div>
@@ -45,11 +45,11 @@
 
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input type="date" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Joining Date" v-model="form.joining_date">
+                                        <input type="date" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Joining Date" v-model="form.joining_date" autocomplete="off">
                                         <small class="text-danger" v-if="errors.joining_date"> {{ errors.joining_date[0] }} </small>
                                     </div>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Nid" v-model="form.nid">
+                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Nid" v-model="form.nid" autocomplete="off">
                                         <small class="text-danger" v-if="errors.nid"> {{ errors.nid[0] }} </small>
                                     </div>     
                                 </div>

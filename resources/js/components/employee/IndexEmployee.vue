@@ -10,20 +10,31 @@
                 <table class="table align-items-center table-flush table-hover">
                     <thead class="thead-light">
                         <tr>
-                            <th>Order ID</th>
-                            <th>Customer</th>
-                            <th>Item</th>
-                            <th>Status</th>
+                            <th>Photo</th>
+                            <th>Emp Name</th>
+                            <th>NID Num</th>
+                            <th>Email</th>
+                            <th>Cell Num</th>
+                            <th>Salary</th>
+                            <th>Joining Date</th>
                             <th>Action</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td><a href="#">RA0449</a></td>
-                            <td>Udin Wayang</td>
-                            <td>Nasi Padang</td>
-                            <td><span class="badge badge-success">Delivered</span></td>
-                            <td><a href="#" class="btn btn-sm btn-primary">Detail</a></td>
+                    <tbody v-if="employees.length > 0">
+                        <tr v-for="employee in employees" :key="employee.id">
+                            <td>
+                                <img :src="employee.photo" alt="No image uploaded" id="em_photo">
+                            </td>
+                            <td>{{ employee.name }}</td>
+                            <td>{{ employee.nid }}</td>
+                            <td>{{ employee.email }}</td>
+                            <td>{{ employee.phone }}</td>
+                            <td>{{ employee.salary }}</td>
+                            <td>{{ employee.joining_date | myDate }}</td>
+                            <td>
+                                <a href="#" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -33,3 +44,40 @@
         </div>
     </div>
 </template>
+
+<script>
+export default {
+    created(){
+        if (!User.loggedIn()) {
+            this.$router.push({name: '/'})
+        }
+        this.index()
+    },
+
+    data(){
+        return{
+            employees: []
+        }
+    },
+
+    methods:{
+        index: function(){
+            axios.get("/api/employee/")
+                .then((response)=>{
+                    this.employees = response.data
+                    // console.log(this.employees)
+                })
+                .catch(()=>{
+
+                })
+        }
+    }
+}
+</script>
+
+<style type="text/css">
+  #em_photo{
+    height: 40px;
+    width: 40px;
+  }
+</style>

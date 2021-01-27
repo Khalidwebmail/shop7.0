@@ -16,8 +16,7 @@ class EmployeeController extends Controller
      */
     public function index()
     {
-        $emp = Employee::all();
-        return response()->json($emp);
+        return Employee::all();
     }
 
     /**
@@ -28,31 +27,25 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request, Employee $employee)
     {
-        $data = $request->all();
-        if($request->hasFile("photo"))
+        if($request->photo)
         {
-            $image = $request->file("image");
-            if(isset($image)){
-                $position = strpos($request->photo,';'); //data:image/jpeg;base64
-                $sub = substr($request->photo, 0); //data:image/jpeg
-                $ext = explode('/', $sub)[1];
-                $name = sha1(rand()).".".$ext;
-                $img = \Image::make($request->photo)->resize(240, 200);
-                $upload_path = "backend/employee/";
-                $img_url = $upload_path.$name;
-            }
+            $position = strpos($request->photo, ';');
+            $sub = substr($request->photo, 0, $position);
+            $ext = explode("/", $sub)[1];
+
+            $name = sha1(rand()).".".$ext;
+            \Image::make($request->photo)->resize(240, 200);
+
+            $uplaod_path = public_path("assets/images/employee/");
+
+            $img_url = $uplaod_path.$name;
+            $img_name = explode("/", $img_url);
+            $data = $request->all();
+            $data["photo"] = $img_name[8];
+            $employee->create($data);
+
+            return response()->json(["message" => "Employee created"], 201);
         }
-        Employee::create($data);
-        return response()->json(["message" => "Employee created"], 201);
-        // if($data['photo']){
-        //     $position = strpos($request->photo,';'); //data:image/jpeg;base64
-        //     $sub = substr($request->photo, 0); //data:image/jpeg
-        //     $ext = explode('/', $sub)[1];
-        //     $name = time().".".$ext;
-        //     $img = Image::make($request->photo)->resize(240, 200);
-        //     $upload_path = "backend/employee/";
-        //     $img_url = $upload_path.$name;
-        // }
     }
 
     /**
