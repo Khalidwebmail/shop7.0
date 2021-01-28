@@ -15,13 +15,13 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Full Name" v-model="form.name" autocomplete="off">>
+                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Full Name" v-model="form.name" autocomplete="off">
                                         <small class="text-danger" v-if="errors.name"> {{ errors.name[0] }} </small>
                                     </div>
 
 
                                     <div class="col-md-6">
-                                        <input type="email" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Email" v-model="form.email" autocomplete="off">>
+                                        <input type="email" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Email" v-model="form.email" autocomplete="off">
                                         <small class="text-danger" v-if="errors.email"> {{ errors.email[0] }} </small>
                                     </div>     
                                 </div>
@@ -31,12 +31,12 @@
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Address" v-model="form.address" autocomplete="off">>
+                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Address" v-model="form.address" autocomplete="off">
                                         <small class="text-danger" v-if="errors.address"> {{ errors.address[0] }} </small>
                                     </div>
 
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Salary" v-model="form.salary" autocomplete="off">>
+                                        <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Salary" v-model="form.salary" autocomplete="off">
                                         <small class="text-danger" v-if="errors.salary"> {{ errors.salary[0] }} </small>
                                     </div>
                                 </div>
@@ -133,7 +133,6 @@
                     let reader = new FileReader();
                     reader.onload = event => {
                         this.form.photo = event.target.result;
-                        console.log(this.form.photo)
                     };
                     reader.readAsDataURL(file);
                 }

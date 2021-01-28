@@ -34,14 +34,12 @@ class EmployeeController extends Controller
             $ext = explode("/", $sub)[1];
 
             $name = sha1(rand()).".".$ext;
-            \Image::make($request->photo)->resize(240, 200);
-
-            $uplaod_path = public_path("assets/images/employee/");
+            $img = \Image::make($request->photo)->resize(240, 200);
+            $uplaod_path = 'assets/images/employee/';
 
             $img_url = $uplaod_path.$name;
-            $img_name = explode("/", $img_url);
+            $img->save($img_url);
             $data = $request->all();
-            $data["photo"] = $img_name[8];
             $employee->create($data);
 
             return response()->json(["message" => "Employee created"], 201);
@@ -79,6 +77,10 @@ class EmployeeController extends Controller
      */
     public function destroy(Employee $employee)
     {
+        $img_path = 'assets/images/employee/'.$employee->photo;
+        if(isset($img_path)){
+            @unlink($img_path);
+        }
         $employee->delete();
         return response()->json(["message" => "Data deleted"], 200);
     }
