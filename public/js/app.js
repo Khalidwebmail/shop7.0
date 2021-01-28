@@ -2067,7 +2067,6 @@ __webpack_require__.r(__webpack_exports__);
 
         reader.onload = function (event) {
           _this.form.photo = event.target.result;
-          console.log(_this.form.photo);
         };
 
         reader.readAsDataURL(file);
@@ -67498,7 +67497,7 @@ var render = function() {
                               }
                             }
                           }),
-                          _vm._v(">\n                                    "),
+                          _vm._v(" "),
                           _vm.errors.name
                             ? _c("small", { staticClass: "text-danger" }, [
                                 _vm._v(" " + _vm._s(_vm.errors.name[0]) + " ")
@@ -67533,7 +67532,7 @@ var render = function() {
                               }
                             }
                           }),
-                          _vm._v(">\n                                    "),
+                          _vm._v(" "),
                           _vm.errors.email
                             ? _c("small", { staticClass: "text-danger" }, [
                                 _vm._v(" " + _vm._s(_vm.errors.email[0]) + " ")
@@ -67576,7 +67575,7 @@ var render = function() {
                               }
                             }
                           }),
-                          _vm._v(">\n                                    "),
+                          _vm._v(" "),
                           _vm.errors.address
                             ? _c("small", { staticClass: "text-danger" }, [
                                 _vm._v(
@@ -67617,7 +67616,7 @@ var render = function() {
                               }
                             }
                           }),
-                          _vm._v(">\n                                    "),
+                          _vm._v(" "),
                           _vm.errors.salary
                             ? _c("small", { staticClass: "text-danger" }, [
                                 _vm._v(" " + _vm._s(_vm.errors.salary[0]) + " ")
