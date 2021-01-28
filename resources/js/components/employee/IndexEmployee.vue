@@ -33,8 +33,8 @@
                             <td>{{ employee.salary }}</td>
                             <td>{{ employee.joining_date | myDate }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="javascript:void(0)" v-on:click="destroy(employee.id)" class="btn btn-sm btn-danger">Delete</a>
                             </td>
                         </tr>
                     </tbody>
@@ -53,6 +53,9 @@ export default {
             this.$router.push({name: '/'})
         }
         this.index()
+        Fire.$on('AfterCreate', ()=> {
+            this.index()
+        });
     },
 
     data(){
@@ -69,6 +72,7 @@ export default {
             })
         }
     },
+
     methods:{
         index: function(){
             axios.get("/api/employee/")
@@ -79,6 +83,34 @@ export default {
                 .catch(()=>{
 
                 })
+        },
+
+        destroy: function(id){
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.value) {
+
+                axios.delete("/api/employee/" + id)
+                    .then(()=>{
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        Fire.$emit('AfterCreate');
+                    })
+                    .catch(()=>{
+                        this.$router.push({name: 'employees'})
+                    })
+                }
+            })
         }
     }
 }
