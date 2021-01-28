@@ -2147,6 +2147,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
     if (!User.loggedIn()) {
@@ -2159,15 +2160,25 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      employees: []
+      employees: [],
+      searchTerm: ''
     };
+  },
+  computed: {
+    filterSearch: function filterSearch() {
+      var _this = this;
+
+      return this.employees.filter(function (employee) {
+        return employee.phone.match(_this.searchTerm);
+      });
+    }
   },
   methods: {
     index: function index() {
-      var _this = this;
+      var _this2 = this;
 
       axios.get("/api/employee/").then(function (response) {
-        _this.employees = response.data; // console.log(this.employees)
+        _this2.employees = response.data; // console.log(this.employees)
       })["catch"](function () {});
     }
   }
@@ -67806,19 +67817,53 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-lg-12 mb-4" }, [
       _c("div", { staticClass: "card" }, [
-        _vm._m(0),
+        _c(
+          "div",
+          {
+            staticClass:
+              "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+          },
+          [
+            _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+              _vm._v("Employee List")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchTerm,
+                  expression: "searchTerm"
+                }
+              ],
+              staticClass: "form-control",
+              staticStyle: { width: "300px" },
+              attrs: { type: "text", placeholder: "Search Here" },
+              domProps: { value: _vm.searchTerm },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.searchTerm = $event.target.value
+                }
+              }
+            })
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "table-responsive" }, [
           _c(
             "table",
             { staticClass: "table align-items-center table-flush table-hover" },
             [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _vm.employees.length > 0
                 ? _c(
                     "tbody",
-                    _vm._l(_vm.employees, function(employee) {
+                    _vm._l(_vm.filterSearch, function(employee) {
                       return _c("tr", { key: employee.id }, [
                         _c("td", [
                           _c("img", {
@@ -67846,7 +67891,7 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(2, true)
+                        _vm._m(1, true)
                       ])
                     }),
                     0
@@ -67862,23 +67907,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-header py-3 d-flex flex-row align-items-center justify-content-between"
-      },
-      [
-        _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-          _vm._v("Employee List")
-        ])
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
