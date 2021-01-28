@@ -43,6 +43,8 @@ import moment from 'moment';
 Vue.filter('myDate', function(created) {
     return moment(created).format('MMMM Do YYYY');
 });
+
+window.Fire = new Vue();
 // var Chart = require('chart.js');
 /**
  * The following block of code may be used to automatically register your

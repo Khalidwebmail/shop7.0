@@ -5,6 +5,7 @@
             <div class="card">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                 <h6 class="m-0 font-weight-bold text-primary">Employee List</h6>
+                <input type="text" v-model="searchTerm" class="form-control" style="width: 300px;" placeholder="Search Here">
             </div>
             <div class="table-responsive">
                 <table class="table align-items-center table-flush table-hover">
@@ -21,7 +22,7 @@
                         </tr>
                     </thead>
                     <tbody v-if="employees.length > 0">
-                        <tr v-for="employee in employees" :key="employee.id">
+                        <tr v-for="employee in filterSearch" :key="employee.id">
                             <td>
                                 <img :src="employee.photo" alt="No image uploaded" id="em_photo">
                             </td>
@@ -32,8 +33,8 @@
                             <td>{{ employee.salary }}</td>
                             <td>{{ employee.joining_date | myDate }}</td>
                             <td>
-                                <a href="#" class="btn btn-sm btn-primary">Edit</a>
-                                <a href="#" class="btn btn-sm btn-danger">Delete</a>
+                                <a href="javascript:void(0)" class="btn btn-sm btn-primary">Edit</a>
+                                <a href="javascript:void(0)" v-on:click="destroy(employee.id)" class="btn btn-sm btn-danger">Delete</a>
                             </td>
                         </tr>
                     </tbody>
@@ -52,11 +53,23 @@ export default {
             this.$router.push({name: '/'})
         }
         this.index()
+        Fire.$on('AfterCreate', ()=> {
+            this.index()
+        });
     },
 
     data(){
         return{
-            employees: []
+            employees: [],
+            searchTerm: ''
+        }
+    },
+
+    computed:{
+        filterSearch(){
+            return this.employees.filter(employee => {
+                return employee.phone.match(this.searchTerm)
+            })
         }
     },
 
@@ -70,6 +83,34 @@ export default {
                 .catch(()=>{
 
                 })
+        },
+
+        destroy: function(id){
+            Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+            if (result.value) {
+
+                axios.delete("/api/employee/" + id)
+                    .then(()=>{
+                        Swal.fire(
+                            'Deleted!',
+                            'Your file has been deleted.',
+                            'success'
+                        )
+                        Fire.$emit('AfterCreate');
+                    })
+                    .catch(()=>{
+                        this.$router.push({name: 'employees'})
+                    })
+                }
+            })
         }
     }
 }

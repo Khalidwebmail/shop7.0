@@ -2147,8 +2147,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   created: function created() {
+    var _this = this;
+
     if (!User.loggedIn()) {
       this.$router.push({
         name: '/'
@@ -2156,19 +2159,56 @@ __webpack_require__.r(__webpack_exports__);
     }
 
     this.index();
+    Fire.$on('AfterCreate', function () {
+      _this.index();
+    });
   },
   data: function data() {
     return {
-      employees: []
+      employees: [],
+      searchTerm: ''
     };
+  },
+  computed: {
+    filterSearch: function filterSearch() {
+      var _this2 = this;
+
+      return this.employees.filter(function (employee) {
+        return employee.phone.match(_this2.searchTerm);
+      });
+    }
   },
   methods: {
     index: function index() {
-      var _this = this;
+      var _this3 = this;
 
       axios.get("/api/employee/").then(function (response) {
-        _this.employees = response.data; // console.log(this.employees)
+        _this3.employees = response.data; // console.log(this.employees)
       })["catch"](function () {});
+    },
+    destroy: function destroy(id) {
+      var _this4 = this;
+
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(function (result) {
+        if (result.value) {
+          axios["delete"]("/api/employee/" + id).then(function () {
+            Swal.fire('Deleted!', 'Your file has been deleted.', 'success');
+            Fire.$emit('AfterCreate');
+          })["catch"](function () {
+            _this4.$router.push({
+              name: 'employees'
+            });
+          });
+        }
+      });
     }
   }
 });
@@ -67806,19 +67846,53 @@ var render = function() {
   return _c("div", { staticClass: "row" }, [
     _c("div", { staticClass: "col-lg-12 mb-4" }, [
       _c("div", { staticClass: "card" }, [
-        _vm._m(0),
+        _c(
+          "div",
+          {
+            staticClass:
+              "card-header py-3 d-flex flex-row align-items-center justify-content-between"
+          },
+          [
+            _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
+              _vm._v("Employee List")
+            ]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.searchTerm,
+                  expression: "searchTerm"
+                }
+              ],
+              staticClass: "form-control",
+              staticStyle: { width: "300px" },
+              attrs: { type: "text", placeholder: "Search Here" },
+              domProps: { value: _vm.searchTerm },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.searchTerm = $event.target.value
+                }
+              }
+            })
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "table-responsive" }, [
           _c(
             "table",
             { staticClass: "table align-items-center table-flush table-hover" },
             [
-              _vm._m(1),
+              _vm._m(0),
               _vm._v(" "),
               _vm.employees.length > 0
                 ? _c(
                     "tbody",
-                    _vm._l(_vm.employees, function(employee) {
+                    _vm._l(_vm.filterSearch, function(employee) {
                       return _c("tr", { key: employee.id }, [
                         _c("td", [
                           _c("img", {
@@ -67846,7 +67920,30 @@ var render = function() {
                           )
                         ]),
                         _vm._v(" "),
-                        _vm._m(2, true)
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-primary",
+                              attrs: { href: "javascript:void(0)" }
+                            },
+                            [_vm._v("Edit")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-danger",
+                              attrs: { href: "javascript:void(0)" },
+                              on: {
+                                click: function($event) {
+                                  return _vm.destroy(employee.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Delete")]
+                          )
+                        ])
                       ])
                     }),
                     0
@@ -67862,23 +67959,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass:
-          "card-header py-3 d-flex flex-row align-items-center justify-content-between"
-      },
-      [
-        _c("h6", { staticClass: "m-0 font-weight-bold text-primary" }, [
-          _vm._v("Employee List")
-        ])
-      ]
-    )
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
@@ -67900,20 +67980,6 @@ var staticRenderFns = [
         _c("th", [_vm._v("Joining Date")]),
         _vm._v(" "),
         _c("th", [_vm._v("Action")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("a", { staticClass: "btn btn-sm btn-primary", attrs: { href: "#" } }, [
-        _vm._v("Edit")
-      ]),
-      _vm._v(" "),
-      _c("a", { staticClass: "btn btn-sm btn-danger", attrs: { href: "#" } }, [
-        _vm._v("Delete")
       ])
     ])
   }
@@ -84808,7 +84874,8 @@ window.Toast = Toast; // Noty
 
 Vue.filter('myDate', function (created) {
   return moment__WEBPACK_IMPORTED_MODULE_5___default()(created).format('MMMM Do YYYY');
-}); // var Chart = require('chart.js');
+});
+window.Fire = new Vue(); // var Chart = require('chart.js');
 
 /**
  * The following block of code may be used to automatically register your
