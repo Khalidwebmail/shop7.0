@@ -33,7 +33,8 @@
                             <td>{{ employee.salary }}</td>
                             <td>{{ employee.joining_date | myDate }}</td>
                             <td>
-                                <a href="javascript:void(0)" class="btn btn-sm btn-primary">Edit</a>
+                                <router-link :to="{name: 'edit-employees', params:{id:employee.id}}" class="btn btn-sm btn-primary">Edit</router-link>
+                                
                                 <a href="javascript:void(0)" v-on:click="destroy(employee.id)" class="btn btn-sm btn-danger">Delete</a>
                             </td>
                         </tr>

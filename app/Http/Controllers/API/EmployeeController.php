@@ -49,12 +49,12 @@ class EmployeeController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  object  $employee
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Employee $employee)
     {
-        //
+        return $employee;
     }
 
     /**
@@ -64,9 +64,30 @@ class EmployeeController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(EmployeeRequest $request, $id)
     {
-        //
+        $employee = Employee::findOrFail($id);
+        $img_path = 'assets/images/employee/'.$employee->photo;
+        if(isset($img_path)){
+            @unlink($img_path);
+        }
+        if($request->photo)
+        {
+            $position = strpos($request->photo, ';');
+            $sub = substr($request->photo, 0, $position);
+            $ext = explode("/", $sub)[1];
+
+            $name = sha1(rand()).".".$ext;
+            $img = \Image::make($request->photo)->resize(240, 200);
+            $uplaod_path = 'assets/images/employee/';
+
+            $img_url = $uplaod_path.$name;
+            $img->save($img_url);
+            $data = $request->all();
+            $employee->update($data);
+
+            return response()->json(["message" => "Employee created"], 201);
+        }
     }
 
     /**

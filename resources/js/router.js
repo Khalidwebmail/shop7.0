@@ -22,7 +22,7 @@ const routes = [
     { path: '/logout', component: LogoutComponent, name: 'logout' },
     { path: '/employees', component: IndexEmployee, name: 'employees' },
     { path: '/store-employees', component: CreateEmployee, name: 'store-employees' },
-    { path: '/edit-employees', component: EditEmployee, name: 'edit-employees' },
+    { path: '/edit-employees/:id', component: EditEmployee, name: 'edit-employees' },
 ]
 
 export default new VueRouter({
