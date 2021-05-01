@@ -5,7 +5,6 @@ namespace App\Http\Controllers\API;
 use App\Employee;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\EmployeeRequest;
-use Illuminate\Http\Request;
 
 class EmployeeController extends Controller
 {
@@ -27,23 +26,10 @@ class EmployeeController extends Controller
      */
     public function store(EmployeeRequest $request, Employee $employee)
     {
-        if($request->photo)
-        {
-            $position = strpos($request->photo, ';');
-            $sub = substr($request->photo, 0, $position);
-            $ext = explode("/", $sub)[1];
+        $data = $request->all();
+        $employee->create($data);
 
-            $name = sha1(rand()).".".$ext;
-            $img = \Image::make($request->photo)->resize(240, 200);
-            $uplaod_path = 'assets/images/employee/';
-
-            $img_url = $uplaod_path.$name;
-            $img->save($img_url);
-            $data = $request->all();
-            $employee->create($data);
-
-            return response()->json(["message" => "Employee created"], 201);
-        }
+        return response()->json(["message" => "Employee created"], 201);
     }
 
     /**
@@ -86,7 +72,7 @@ class EmployeeController extends Controller
             $data = $request->all();
             $employee->update($data);
 
-            return response()->json(["message" => "Employee created"], 201);
+            return response()->json(["message" => "Employee updated"], 200);
         }
     }
 

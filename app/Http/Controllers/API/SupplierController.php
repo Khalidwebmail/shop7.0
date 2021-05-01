@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SupplierRequest;
 use Illuminate\Http\Request;
-
+use App\Supplier;
+use Image;
 class SupplierController extends Controller
 {
     /**
@@ -14,7 +16,8 @@ class SupplierController extends Controller
      */
     public function index()
     {
-        //
+        $suppliers = Supplier::all();
+        return  response()->json($suppliers);
     }
 
     /**
@@ -23,9 +26,11 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(SupplierRequest $request, Supplier $supplier)
     {
-        //
+        $data = $request->all();
+        $supplier->create($data);
+        return response()->json(["message" => "Supplier created"], 201);
     }
 
     /**
@@ -34,9 +39,10 @@ class SupplierController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Supplier $supplier)
     {
-        //
+        return $supplier;
+
     }
 
     /**
@@ -48,7 +54,11 @@ class SupplierController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        $data = $request->all();
+        $supplier->update($data);
+
+        return response()->json(["message" => "Supplier updated"], 200);
     }
 
     /**
@@ -59,6 +69,8 @@ class SupplierController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $supplier = Supplier::findOrFail($id);
+        $supplier->delete();
+        return response()->json(["message" => "Supplier deleted"], 200);
     }
 }

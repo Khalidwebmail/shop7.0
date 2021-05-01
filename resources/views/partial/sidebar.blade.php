@@ -38,8 +38,8 @@
         </a>
         <div id="collapseForm" class="collapse" aria-labelledby="headingForm" data-parent="#sidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <router-link class="collapse-item" to="/supplier-create">Add New</router-link>
-                <router-link class="collapse-item" to="/supplier-edit">List</router-link>
+                <router-link class="collapse-item" to="/store-suppliers">Add New</router-link>
+                <router-link class="collapse-item" to="/suppliers">List</router-link>
             </div>
         </div>
     </li>

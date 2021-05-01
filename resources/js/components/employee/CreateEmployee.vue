@@ -23,11 +23,11 @@
                                     <div class="col-md-6">
                                         <input type="email" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Email" v-model="form.email" autocomplete="off">
                                         <small class="text-danger" v-if="errors.email"> {{ errors.email[0] }} </small>
-                                    </div>     
+                                    </div>
                                 </div>
                             </div>
-                        
-                            
+
+
                             <div class="form-group">
                                 <div class="form-row">
                                     <div class="col-md-6">
@@ -51,7 +51,7 @@
                                     <div class="col-md-6">
                                         <input type="text" class="form-control" id="exampleInputFirstName" placeholder="Enter Your Nid" v-model="form.nid" autocomplete="off">
                                         <small class="text-danger" v-if="errors.nid"> {{ errors.nid[0] }} </small>
-                                    </div>     
+                                    </div>
                                 </div>
                             </div>
 
@@ -62,7 +62,7 @@
                                         <small class="text-danger" v-if="errors.phone"> {{ errors.phone[0] }} </small>
                                     </div>
                                     <div class="col-md-6">
-                                        
+
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +73,6 @@
                                 <div class="form-row">
                                     <div class="col-md-6">
                                         <input type="file" class="custom-file-input" id="customFile" v-on:change="onFileSelected">
-                                        <small class="text-danger" v-if="errors.photo"> {{ errors.photo[0] }} </small>
                                         <label class="custom-file-label" for="customFile">Choose file</label>
                                     </div>
 
